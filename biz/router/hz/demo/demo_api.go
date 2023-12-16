@@ -19,6 +19,9 @@ func Register(r *server.Hertz) {
 	root := r.Group("/", rootMw()...)
 	{
 		_msg := root.Group("/msg", _msgMw()...)
+		_msg.POST("/delete", append(_deletemsgMw(), demo.DeleteMsg)...)
+		_msg.POST("/insert", append(_insertmsgMw(), demo.InsertMsg)...)
 		_msg.GET("/query", append(_querymsgMw(), demo.QueryMsg)...)
+		_msg.POST("/update", append(_updatemsgMw(), demo.UpdateMsg)...)
 	}
 }

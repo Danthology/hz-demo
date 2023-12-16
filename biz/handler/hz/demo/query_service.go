@@ -21,7 +21,58 @@ func QueryMsg(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(demo.QueryResponse)
+	resp := &demo.QueryResponse{
+		Num:  100,
+		Code: "test",
+	}
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// InsertMsg .
+// @router msg/insert [POST]
+func InsertMsg(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req demo.QueryRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	resp := new(demo.InsertResponse)
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// DeleteMsg .
+// @router msg/delete [POST]
+func DeleteMsg(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req demo.QueryRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	resp := new(demo.DeleteResponse)
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// UpdateMsg .
+// @router msg/update [POST]
+func UpdateMsg(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req demo.QueryRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	resp := new(demo.UpdateResponse)
 
 	c.JSON(consts.StatusOK, resp)
 }

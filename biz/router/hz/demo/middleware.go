@@ -20,3 +20,18 @@ func _querymsgMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _deletemsgMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _insertmsgMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _updatemsgMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
