@@ -372,8 +372,8 @@ func (p *QueryRequest) String() string {
 }
 
 type QueryResponse struct {
-	Num   int32  `thrift:"Num,1" form:"Num" json:"Num" query:"Num"`
-	Code  string `thrift:"Code,2" form:"Code" json:"Code" query:"Code"`
+	Code  Code   `thrift:"Code,1" form:"Code" json:"Code" query:"Code"`
+	Des   string `thrift:"des,2" form:"des" json:"des" query:"des"`
 	Dbmsg *DbMsg `thrift:"Dbmsg,3" form:"Dbmsg" json:"Dbmsg" query:"Dbmsg"`
 }
 
@@ -381,12 +381,12 @@ func NewQueryResponse() *QueryResponse {
 	return &QueryResponse{}
 }
 
-func (p *QueryResponse) GetNum() (v int32) {
-	return p.Num
+func (p *QueryResponse) GetCode() (v Code) {
+	return p.Code
 }
 
-func (p *QueryResponse) GetCode() (v string) {
-	return p.Code
+func (p *QueryResponse) GetDes() (v string) {
+	return p.Des
 }
 
 var QueryResponse_Dbmsg_DEFAULT *DbMsg
@@ -399,8 +399,8 @@ func (p *QueryResponse) GetDbmsg() (v *DbMsg) {
 }
 
 var fieldIDToName_QueryResponse = map[int16]string{
-	1: "Num",
-	2: "Code",
+	1: "Code",
+	2: "des",
 	3: "Dbmsg",
 }
 
@@ -485,7 +485,7 @@ func (p *QueryResponse) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
-		p.Num = v
+		p.Code = Code(v)
 	}
 	return nil
 }
@@ -494,7 +494,7 @@ func (p *QueryResponse) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		p.Code = v
+		p.Des = v
 	}
 	return nil
 }
@@ -543,10 +543,10 @@ WriteStructEndError:
 }
 
 func (p *QueryResponse) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Num", thrift.I32, 1); err != nil {
+	if err = oprot.WriteFieldBegin("Code", thrift.I32, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI32(p.Num); err != nil {
+	if err := oprot.WriteI32(int32(p.Code)); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -560,10 +560,10 @@ WriteFieldEndError:
 }
 
 func (p *QueryResponse) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Code", thrift.STRING, 2); err != nil {
+	if err = oprot.WriteFieldBegin("des", thrift.STRING, 2); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Code); err != nil {
+	if err := oprot.WriteString(p.Des); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -781,25 +781,25 @@ func (p *InsertRequest) String() string {
 }
 
 type InsertResponse struct {
-	Num  int32  `thrift:"Num,1" form:"Num" json:"Num" query:"Num"`
-	Code string `thrift:"Code,2" form:"Code" json:"Code" query:"Code"`
+	Code Code   `thrift:"Code,1" form:"Code" json:"Code" query:"Code"`
+	Des  string `thrift:"des,2" form:"des" json:"des" query:"des"`
 }
 
 func NewInsertResponse() *InsertResponse {
 	return &InsertResponse{}
 }
 
-func (p *InsertResponse) GetNum() (v int32) {
-	return p.Num
-}
-
-func (p *InsertResponse) GetCode() (v string) {
+func (p *InsertResponse) GetCode() (v Code) {
 	return p.Code
 }
 
+func (p *InsertResponse) GetDes() (v string) {
+	return p.Des
+}
+
 var fieldIDToName_InsertResponse = map[int16]string{
-	1: "Num",
-	2: "Code",
+	1: "Code",
+	2: "des",
 }
 
 func (p *InsertResponse) Read(iprot thrift.TProtocol) (err error) {
@@ -871,7 +871,7 @@ func (p *InsertResponse) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
-		p.Num = v
+		p.Code = Code(v)
 	}
 	return nil
 }
@@ -880,7 +880,7 @@ func (p *InsertResponse) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		p.Code = v
+		p.Des = v
 	}
 	return nil
 }
@@ -918,10 +918,10 @@ WriteStructEndError:
 }
 
 func (p *InsertResponse) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Num", thrift.I32, 1); err != nil {
+	if err = oprot.WriteFieldBegin("Code", thrift.I32, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI32(p.Num); err != nil {
+	if err := oprot.WriteI32(int32(p.Code)); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -935,10 +935,10 @@ WriteFieldEndError:
 }
 
 func (p *InsertResponse) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Code", thrift.STRING, 2); err != nil {
+	if err = oprot.WriteFieldBegin("des", thrift.STRING, 2); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Code); err != nil {
+	if err := oprot.WriteString(p.Des); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -1095,25 +1095,25 @@ func (p *DeleteRequest) String() string {
 }
 
 type DeleteResponse struct {
-	Num  int32  `thrift:"Num,1" form:"Num" json:"Num" query:"Num"`
-	Code string `thrift:"Code,2" form:"Code" json:"Code" query:"Code"`
+	Code Code   `thrift:"Code,1" form:"Code" json:"Code" query:"Code"`
+	Des  string `thrift:"des,2" form:"des" json:"des" query:"des"`
 }
 
 func NewDeleteResponse() *DeleteResponse {
 	return &DeleteResponse{}
 }
 
-func (p *DeleteResponse) GetNum() (v int32) {
-	return p.Num
-}
-
-func (p *DeleteResponse) GetCode() (v string) {
+func (p *DeleteResponse) GetCode() (v Code) {
 	return p.Code
 }
 
+func (p *DeleteResponse) GetDes() (v string) {
+	return p.Des
+}
+
 var fieldIDToName_DeleteResponse = map[int16]string{
-	1: "Num",
-	2: "Code",
+	1: "Code",
+	2: "des",
 }
 
 func (p *DeleteResponse) Read(iprot thrift.TProtocol) (err error) {
@@ -1185,7 +1185,7 @@ func (p *DeleteResponse) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
-		p.Num = v
+		p.Code = Code(v)
 	}
 	return nil
 }
@@ -1194,7 +1194,7 @@ func (p *DeleteResponse) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		p.Code = v
+		p.Des = v
 	}
 	return nil
 }
@@ -1232,10 +1232,10 @@ WriteStructEndError:
 }
 
 func (p *DeleteResponse) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Num", thrift.I32, 1); err != nil {
+	if err = oprot.WriteFieldBegin("Code", thrift.I32, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI32(p.Num); err != nil {
+	if err := oprot.WriteI32(int32(p.Code)); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -1249,10 +1249,10 @@ WriteFieldEndError:
 }
 
 func (p *DeleteResponse) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Code", thrift.STRING, 2); err != nil {
+	if err = oprot.WriteFieldBegin("des", thrift.STRING, 2); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Code); err != nil {
+	if err := oprot.WriteString(p.Des); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -1453,25 +1453,25 @@ func (p *UpdateRequest) String() string {
 }
 
 type UpdateResponse struct {
-	Num  int32  `thrift:"Num,1" form:"Num" json:"Num" query:"Num"`
-	Code string `thrift:"Code,2" form:"Code" json:"Code" query:"Code"`
+	Code Code   `thrift:"Code,1" form:"Code" json:"Code" query:"Code"`
+	Des  string `thrift:"des,2" form:"des" json:"des" query:"des"`
 }
 
 func NewUpdateResponse() *UpdateResponse {
 	return &UpdateResponse{}
 }
 
-func (p *UpdateResponse) GetNum() (v int32) {
-	return p.Num
-}
-
-func (p *UpdateResponse) GetCode() (v string) {
+func (p *UpdateResponse) GetCode() (v Code) {
 	return p.Code
 }
 
+func (p *UpdateResponse) GetDes() (v string) {
+	return p.Des
+}
+
 var fieldIDToName_UpdateResponse = map[int16]string{
-	1: "Num",
-	2: "Code",
+	1: "Code",
+	2: "des",
 }
 
 func (p *UpdateResponse) Read(iprot thrift.TProtocol) (err error) {
@@ -1543,7 +1543,7 @@ func (p *UpdateResponse) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
-		p.Num = v
+		p.Code = Code(v)
 	}
 	return nil
 }
@@ -1552,7 +1552,7 @@ func (p *UpdateResponse) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		p.Code = v
+		p.Des = v
 	}
 	return nil
 }
@@ -1590,10 +1590,10 @@ WriteStructEndError:
 }
 
 func (p *UpdateResponse) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Num", thrift.I32, 1); err != nil {
+	if err = oprot.WriteFieldBegin("Code", thrift.I32, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI32(p.Num); err != nil {
+	if err := oprot.WriteI32(int32(p.Code)); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -1607,10 +1607,10 @@ WriteFieldEndError:
 }
 
 func (p *UpdateResponse) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Code", thrift.STRING, 2); err != nil {
+	if err = oprot.WriteFieldBegin("des", thrift.STRING, 2); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Code); err != nil {
+	if err := oprot.WriteString(p.Des); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -1634,11 +1634,11 @@ func (p *UpdateResponse) String() string {
 type QueryService interface {
 	QueryMsg(ctx context.Context, request *QueryRequest) (r *QueryResponse, err error)
 
-	InsertMsg(ctx context.Context, request *QueryRequest) (r *InsertResponse, err error)
+	InsertMsg(ctx context.Context, request *InsertRequest) (r *InsertResponse, err error)
 
-	DeleteMsg(ctx context.Context, request *QueryRequest) (r *DeleteResponse, err error)
+	DeleteMsg(ctx context.Context, request *DeleteRequest) (r *DeleteResponse, err error)
 
-	UpdateMsg(ctx context.Context, request *QueryRequest) (r *UpdateResponse, err error)
+	UpdateMsg(ctx context.Context, request *UpdateRequest) (r *UpdateResponse, err error)
 }
 
 type QueryServiceClient struct {
@@ -1676,7 +1676,7 @@ func (p *QueryServiceClient) QueryMsg(ctx context.Context, request *QueryRequest
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *QueryServiceClient) InsertMsg(ctx context.Context, request *QueryRequest) (r *InsertResponse, err error) {
+func (p *QueryServiceClient) InsertMsg(ctx context.Context, request *InsertRequest) (r *InsertResponse, err error) {
 	var _args QueryServiceInsertMsgArgs
 	_args.Request = request
 	var _result QueryServiceInsertMsgResult
@@ -1685,7 +1685,7 @@ func (p *QueryServiceClient) InsertMsg(ctx context.Context, request *QueryReques
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *QueryServiceClient) DeleteMsg(ctx context.Context, request *QueryRequest) (r *DeleteResponse, err error) {
+func (p *QueryServiceClient) DeleteMsg(ctx context.Context, request *DeleteRequest) (r *DeleteResponse, err error) {
 	var _args QueryServiceDeleteMsgArgs
 	_args.Request = request
 	var _result QueryServiceDeleteMsgResult
@@ -1694,7 +1694,7 @@ func (p *QueryServiceClient) DeleteMsg(ctx context.Context, request *QueryReques
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *QueryServiceClient) UpdateMsg(ctx context.Context, request *QueryRequest) (r *UpdateResponse, err error) {
+func (p *QueryServiceClient) UpdateMsg(ctx context.Context, request *UpdateRequest) (r *UpdateResponse, err error) {
 	var _args QueryServiceUpdateMsgArgs
 	_args.Request = request
 	var _result QueryServiceUpdateMsgResult
@@ -2227,16 +2227,16 @@ func (p *QueryServiceQueryMsgResult) String() string {
 }
 
 type QueryServiceInsertMsgArgs struct {
-	Request *QueryRequest `thrift:"request,1"`
+	Request *InsertRequest `thrift:"request,1"`
 }
 
 func NewQueryServiceInsertMsgArgs() *QueryServiceInsertMsgArgs {
 	return &QueryServiceInsertMsgArgs{}
 }
 
-var QueryServiceInsertMsgArgs_Request_DEFAULT *QueryRequest
+var QueryServiceInsertMsgArgs_Request_DEFAULT *InsertRequest
 
-func (p *QueryServiceInsertMsgArgs) GetRequest() (v *QueryRequest) {
+func (p *QueryServiceInsertMsgArgs) GetRequest() (v *InsertRequest) {
 	if !p.IsSetRequest() {
 		return QueryServiceInsertMsgArgs_Request_DEFAULT
 	}
@@ -2308,7 +2308,7 @@ ReadStructEndError:
 }
 
 func (p *QueryServiceInsertMsgArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Request = NewQueryRequest()
+	p.Request = NewInsertRequest()
 	if err := p.Request.Read(iprot); err != nil {
 		return err
 	}
@@ -2513,16 +2513,16 @@ func (p *QueryServiceInsertMsgResult) String() string {
 }
 
 type QueryServiceDeleteMsgArgs struct {
-	Request *QueryRequest `thrift:"request,1"`
+	Request *DeleteRequest `thrift:"request,1"`
 }
 
 func NewQueryServiceDeleteMsgArgs() *QueryServiceDeleteMsgArgs {
 	return &QueryServiceDeleteMsgArgs{}
 }
 
-var QueryServiceDeleteMsgArgs_Request_DEFAULT *QueryRequest
+var QueryServiceDeleteMsgArgs_Request_DEFAULT *DeleteRequest
 
-func (p *QueryServiceDeleteMsgArgs) GetRequest() (v *QueryRequest) {
+func (p *QueryServiceDeleteMsgArgs) GetRequest() (v *DeleteRequest) {
 	if !p.IsSetRequest() {
 		return QueryServiceDeleteMsgArgs_Request_DEFAULT
 	}
@@ -2594,7 +2594,7 @@ ReadStructEndError:
 }
 
 func (p *QueryServiceDeleteMsgArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Request = NewQueryRequest()
+	p.Request = NewDeleteRequest()
 	if err := p.Request.Read(iprot); err != nil {
 		return err
 	}
@@ -2799,16 +2799,16 @@ func (p *QueryServiceDeleteMsgResult) String() string {
 }
 
 type QueryServiceUpdateMsgArgs struct {
-	Request *QueryRequest `thrift:"request,1"`
+	Request *UpdateRequest `thrift:"request,1"`
 }
 
 func NewQueryServiceUpdateMsgArgs() *QueryServiceUpdateMsgArgs {
 	return &QueryServiceUpdateMsgArgs{}
 }
 
-var QueryServiceUpdateMsgArgs_Request_DEFAULT *QueryRequest
+var QueryServiceUpdateMsgArgs_Request_DEFAULT *UpdateRequest
 
-func (p *QueryServiceUpdateMsgArgs) GetRequest() (v *QueryRequest) {
+func (p *QueryServiceUpdateMsgArgs) GetRequest() (v *UpdateRequest) {
 	if !p.IsSetRequest() {
 		return QueryServiceUpdateMsgArgs_Request_DEFAULT
 	}
@@ -2880,7 +2880,7 @@ ReadStructEndError:
 }
 
 func (p *QueryServiceUpdateMsgArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Request = NewQueryRequest()
+	p.Request = NewUpdateRequest()
 	if err := p.Request.Read(iprot); err != nil {
 		return err
 	}

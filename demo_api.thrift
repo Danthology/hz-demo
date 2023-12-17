@@ -16,8 +16,8 @@ struct QueryRequest {
 }
 
 struct QueryResponse {
-    1: i32 Num;
-    2: string Code;
+    1: Code Code;
+    2: string des;
     3: DbMsg Dbmsg;
 }
 
@@ -27,8 +27,8 @@ struct InsertRequest {
 }
 
 struct InsertResponse {
-    1: i32 Num;
-    2: string Code;
+    1: Code Code;
+    2: string des;
 }
 
 struct DeleteRequest {
@@ -36,8 +36,8 @@ struct DeleteRequest {
 }
 
 struct DeleteResponse {
-    1: i32 Num;
-    2: string Code;
+    1: Code Code;
+    2: string des;
 }
 
 struct UpdateRequest {
@@ -46,13 +46,13 @@ struct UpdateRequest {
 }
 
 struct UpdateResponse {
-    1: i32 Num;
-    2: string Code;
+    1: Code Code;
+    2: string des;
 }
 
 service QueryService {
     QueryResponse queryMsg(1: QueryRequest request) (api.get="msg/query")
-    InsertResponse insertMsg(1: QueryRequest request) (api.post="msg/insert")
-    DeleteResponse deleteMsg(1: QueryRequest request) (api.post="msg/delete")
-    UpdateResponse updateMsg(1: QueryRequest request) (api.post="msg/update")
+    InsertResponse insertMsg(1: InsertRequest request) (api.post="msg/insert")
+    DeleteResponse deleteMsg(1: DeleteRequest request) (api.post="msg/delete")
+    UpdateResponse updateMsg(1: UpdateRequest request) (api.post="msg/update")
 }

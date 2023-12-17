@@ -4,6 +4,8 @@ package demo
 
 import (
 	"context"
+	"hz/demo/biz/dal"
+	"hz/demo/biz/model/mysql"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
@@ -21,9 +23,29 @@ func QueryMsg(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := &demo.QueryResponse{
-		Num:  100,
-		Code: "test",
+	resp := new(demo.QueryResponse)
+
+	u := dal.Msg
+	msg, err := u.WithContext(ctx).Where(u.Num.Eq(req.Num)).Find()
+	if err != nil {
+		resp.Code = demo.Code_DBErr
+		resp.Des = "数据库错误"
+		c.JSON(consts.StatusOK, resp)
+		return
+	}
+
+	dbMsg := &demo.DbMsg{}
+	if len(msg) > 0 {
+		dbMsg = &demo.DbMsg{
+			Mid: *msg[0].Num,
+			Msg: *msg[0].Code,
+		}
+	}
+
+	resp = &demo.QueryResponse{
+		Code:  demo.Code_Success,
+		Des:   "query",
+		Dbmsg: dbMsg,
 	}
 
 	c.JSON(consts.StatusOK, resp)
@@ -33,7 +55,7 @@ func QueryMsg(ctx context.Context, c *app.RequestContext) {
 // @router msg/insert [POST]
 func InsertMsg(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req demo.QueryRequest
+	var req demo.InsertRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
@@ -42,6 +64,20 @@ func InsertMsg(ctx context.Context, c *app.RequestContext) {
 
 	resp := new(demo.InsertResponse)
 
+	u := dal.Msg
+	err = u.WithContext(ctx).Create(&mysql.Msg{
+		Num:  &req.Mid,
+		Code: &req.Msg,
+	})
+	if err != nil {
+		resp.Code = demo.Code_DBErr
+		resp.Des = "插入数据错误"
+		c.JSON(consts.StatusOK, resp)
+		return
+	}
+
+	resp.Code = demo.Code_Success
+	resp.Des = "插入成功"
 	c.JSON(consts.StatusOK, resp)
 }
 
@@ -49,7 +85,7 @@ func InsertMsg(ctx context.Context, c *app.RequestContext) {
 // @router msg/delete [POST]
 func DeleteMsg(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req demo.QueryRequest
+	var req demo.DeleteRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
@@ -58,6 +94,18 @@ func DeleteMsg(ctx context.Context, c *app.RequestContext) {
 
 	resp := new(demo.DeleteResponse)
 
+	u := dal.Msg
+	_, err = u.WithContext(ctx).Where(u.Num.Eq(req.Mid)).Delete()
+	if err != nil {
+		resp.Code = demo.Code_DBErr
+		resp.Des = "删除数据错误"
+		c.JSON(consts.StatusOK, resp)
+		return
+	}
+
+	resp.Code = demo.Code_Success
+	resp.Des = "删除数据成功"
+
 	c.JSON(consts.StatusOK, resp)
 }
 
@@ -65,7 +113,7 @@ func DeleteMsg(ctx context.Context, c *app.RequestContext) {
 // @router msg/update [POST]
 func UpdateMsg(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req demo.QueryRequest
+	var req demo.UpdateRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
@@ -74,5 +122,21 @@ func UpdateMsg(ctx context.Context, c *app.RequestContext) {
 
 	resp := new(demo.UpdateResponse)
 
+	uMsg := &mysql.Msg{
+		Num:  &req.Mid,
+		Code: &req.Msg,
+	}
+
+	u := dal.Msg
+	_, err = u.WithContext(ctx).Where(u.Num.Eq(req.Mid)).Updates(uMsg)
+	if err != nil {
+		resp.Code = demo.Code_DBErr
+		resp.Des = "更新数据错误"
+		c.JSON(consts.StatusOK, resp)
+		return
+	}
+
+	resp.Code = demo.Code_Success
+	resp.Des = "更新数据成功"
 	c.JSON(consts.StatusOK, resp)
 }

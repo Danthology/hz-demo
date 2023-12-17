@@ -4,9 +4,13 @@ package main
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"hz/demo/biz/dal"
 )
 
 func main() {
+	dal.Init()
+	dal.SetDefault(dal.DB)
+
 	h := server.Default(
 		server.WithHostPorts("0.0.0.0:12345"),
 	)
