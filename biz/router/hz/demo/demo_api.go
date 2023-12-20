@@ -24,4 +24,9 @@ func Register(r *server.Hertz) {
 		_msg.GET("/query", append(_querymsgMw(), demo.QueryMsg)...)
 		_msg.POST("/update", append(_updatemsgMw(), demo.UpdateMsg)...)
 	}
+	{
+		_redis := root.Group("/redis", _redisMw()...)
+		_redis.POST("/add", append(_addmsgMw(), demo.AddMsg)...)
+		_redis.POST("/get", append(_getmsgMw(), demo.GetMsg)...)
+	}
 }

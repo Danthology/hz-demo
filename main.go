@@ -5,11 +5,17 @@ package main
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"hz/demo/biz/dal"
+	"hz/demo/biz/mw"
 )
 
-func main() {
+func Init() {
 	dal.Init()
 	dal.SetDefault(dal.DB)
+	mw.Init()
+}
+
+func main() {
+	Init()
 
 	h := server.Default(
 		server.WithHostPorts("0.0.0.0:12345"),

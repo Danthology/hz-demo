@@ -35,3 +35,18 @@ func _updatemsgMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _redisMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _addmsgMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _getmsgMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
